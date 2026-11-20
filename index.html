@@ -1,0 +1,674 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foodie Express - Online Food Ordering</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap');
+
+:root {
+  --orange: #e76f32;
+  --cream: #faf8f3;
+  --dark: #25231f;
+  --muted: #77736b;
+  --line: #e9e4da;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', Arial, sans-serif;
+  background: var(--cream);
+  color: var(--dark);
+}
+
+header {
+  background: white;
+  padding: 18px 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--dark);
+}
+
+nav {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--muted);
+}
+
+nav a:hover { color: var(--orange); }
+
+button, .btn {
+  cursor: pointer;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.primary {
+  background: var(--orange);
+  color: white;
+}
+
+.primary:hover { background: #ca5d27; }
+
+.secondary {
+  background: white;
+  border: 1px solid var(--line);
+  color: var(--dark);
+}
+
+.hero {
+  max-width: 1120px;
+  margin: 30px auto;
+  padding: 55px 7%;
+  border-radius: 22px;
+  background: #f3e8d8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(40px, 6vw, 65px);
+  margin: 12px 0;
+}
+
+.hero h1 span { color: var(--orange); }
+
+.hero p {
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.hero-art { font-size: 145px; }
+
+.eyebrow {
+  color: var(--orange);
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+
+section {
+  max-width: 1120px;
+  margin: 65px auto;
+  padding: 0 22px;
+}
+
+h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 32px;
+  margin: 12px 0 22px;
+}
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.food-card {
+  background: white;
+  padding: 18px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+}
+
+.food-emoji {
+  background: #f8f1e8;
+  height: 145px;
+  display: grid;
+  place-items: center;
+  font-size: 75px;
+  border-radius: 12px;
+}
+
+.food-card h3 { margin: 15px 0 6px; }
+
+.price {
+  color: var(--orange);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.food-card button { width: 100%; }
+
+.cart-box {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 25px;
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 25px;
+}
+
+.cart-row, .admin-row {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.cart-row button {
+  padding: 5px 10px;
+  background: #f8eee8;
+}
+
+.total {
+  border-left: 1px solid var(--line);
+  padding-left: 25px;
+}
+
+.order-box, .admin-list {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.order-card {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  line-height: 1.8;
+}
+
+.admin-section {
+  background: #f3eee5;
+  border-radius: 18px;
+  padding: 28px;
+}
+
+.admin-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+input {
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font: inherit;
+  min-width: 130px;
+}
+
+.admin-form input:first-child { flex: 1; }
+
+.admin-actions { display: flex; gap: 7px; }
+
+.edit {
+  background: #e9f0fa;
+  color: #285d9b;
+}
+
+.delete {
+  background: #fff0eb;
+  color: #bd4c2a;
+}
+
+footer {
+  text-align: center;
+  padding: 35px;
+  color: var(--muted);
+}
+
+dialog {
+  width: min(400px, 90%);
+  margin: auto;
+  border: none;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 15px 50px #0003;
+}
+
+dialog::backdrop { background: #0008; }
+
+dialog form {
+  display: grid;
+  gap: 12px;
+}
+
+.close {
+  justify-self: end;
+}
+
+@media(max-width:700px) {
+  header { justify-content: center; }
+  nav { justify-content: center; }
+  .hero { margin: 15px; padding: 30px 22px; }
+  .hero-art { font-size: 75px; }
+  .food-grid { grid-template-columns: 1fr; }
+  .cart-box { grid-template-columns: 1fr; }
+  .total {
+    border-left: none;
+    border-top: 1px solid var(--line);
+    padding: 18px 0 0;
+  }
+  section { margin: 45px auto; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <a href="#" class="logo">🍔 Foodie Express</a>
+
+  <nav>
+    <a href="#menu">Menu</a>
+    <a href="#cart">Cart</a>
+    <a href="#orders">My Orders</a>
+    <a href="#admin">Admin</a>
+  </nav>
+
+  <button class="secondary" id="loginBtn">Login / Register</button>
+</header>
+
+<div class="hero">
+  <div>
+    <p class="eyebrow">FRESH • FAST • DELICIOUS</p>
+    <h1>Your cravings,<br><span>delivered.</span></h1>
+    <p>Discover delicious food and order your favourites in just a few clicks.</p>
+    <a href="#menu" class="btn primary">Explore Menu</a>
+  </div>
+  <div class="hero-art">🍔</div>
+</div>
+
+<main>
+
+<section id="menu">
+  <div class="heading">
+    <div>
+      <p class="eyebrow">WHAT'S COOKING?</p>
+      <h2>Popular Menu</h2>
+    </div>
+    <span id="cartCount">🛒 0 items</span>
+  </div>
+
+  <div class="food-grid" id="menuGrid"></div>
+</section>
+
+<section id="cart">
+  <p class="eyebrow">READY WHEN YOU ARE</p>
+  <h2>Your Cart</h2>
+
+  <div class="cart-box">
+    <div id="cartItems">Your cart is empty.</div>
+
+    <div class="total">
+      <p>Total Amount</p>
+      <h2 id="cartTotal">₹0</h2>
+      <button class="primary" id="placeOrder">Place Order</button>
+    </div>
+  </div>
+</section>
+
+<section id="orders">
+  <p class="eyebrow">ORDER HISTORY</p>
+  <h2>My Orders</h2>
+  <div class="order-box" id="orderList">No orders yet.</div>
+</section>
+
+<section id="admin" class="admin-section">
+  <p class="eyebrow">MANAGE THE MENU</p>
+  <h2>Admin Panel</h2>
+  <p>Add, update and delete food items.</p>
+
+  <form class="admin-form" id="foodForm">
+    <input id="foodName" placeholder="Food name" required>
+    <input id="foodPrice" type="number" min="1" placeholder="Price ₹" required>
+    <input id="foodEmoji" placeholder="Emoji 🍕">
+    <button class="primary" id="saveFood">Add Food</button>
+    <button class="secondary" id="cancelEdit" type="button" hidden>Cancel</button>
+  </form>
+
+  <div class="admin-list" id="adminList"></div>
+</section>
+
+</main>
+
+<footer>
+  © 2026 Foodie Express | Online Food Ordering System
+</footer>
+
+<dialog id="loginDialog">
+  <form id="loginForm">
+    <button class="close secondary" id="closeDialog" type="button">×</button>
+    <p class="eyebrow">WELCOME</p>
+    <h2>Customer Registration</h2>
+
+    <label for="customerName">Your Name</label>
+    <input id="customerName" placeholder="Enter your name" required>
+
+    <label for="customerEmail">Email Address</label>
+    <input id="customerEmail" type="email" placeholder="Email address" required>
+
+    <button class="primary">Continue</button>
+  </form>
+</dialog>
+
+<script>
+const defaultFoods = [
+  {id:1, name:"Classic Burger", price:149, emoji:"🍔"},
+  {id:2, name:"Margherita Pizza", price:249, emoji:"🍕"},
+  {id:3, name:"Masala Dosa", price:99, emoji:"🥞"},
+  {id:4, name:"Veg Noodles", price:139, emoji:"🍜"},
+  {id:5, name:"French Fries", price:89, emoji:"🍟"},
+  {id:6, name:"Chocolate Shake", price:119, emoji:"🥤"}
+];
+
+function loadData(key, fallback) {
+  try {
+    const data = localStorage.getItem(key);
+    return data ? JSON.parse(data) : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+let foods = loadData("fo-foods", defaultFoods);
+let cart = [];
+let orders = loadData("fo-orders", []);
+let customer = loadData("fo-customer", null);
+let editingId = null;
+
+const $ = id => document.getElementById(id);
+const money = amount => "₹" + amount;
+
+function safeText(value) {
+  return String(value).replace(/[&<>"']/g, c => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;",
+    '"':"&quot;", "'":"&#39;"
+  })[c]);
+}
+
+function saveFoods() {
+  localStorage.setItem("fo-foods", JSON.stringify(foods));
+}
+
+function renderMenu() {
+  $("menuGrid").innerHTML = foods.length
+    ? foods.map(food => `
+      <div class="food-card">
+        <div class="food-emoji">${safeText(food.emoji)}</div>
+        <h3>${safeText(food.name)}</h3>
+        <p class="price">${money(food.price)}</p>
+        <button class="primary" data-add="${food.id}">Add to Cart +</button>
+      </div>
+    `).join("")
+    : "<p>No food items available.</p>";
+
+  document.querySelectorAll("[data-add]").forEach(btn => {
+    btn.onclick = () => addToCart(Number(btn.dataset.add));
+  });
+
+  renderAdmin();
+}
+
+function addToCart(id) {
+  const food = foods.find(f => f.id === id);
+  if (!food) return;
+
+  const item = cart.find(f => f.id === id);
+
+  if (item) item.qty++;
+  else cart.push({...food, qty:1});
+
+  renderCart();
+}
+
+function changeQty(id, amount) {
+  const item = cart.find(f => f.id === id);
+  if (!item) return;
+
+  item.qty += amount;
+
+  if (item.qty <= 0) {
+    cart = cart.filter(f => f.id !== id);
+  }
+
+  renderCart();
+}
+
+function renderCart() {
+  const count = cart.reduce((s, f) => s + f.qty, 0);
+  const total = cart.reduce((s, f) => s + f.price * f.qty, 0);
+
+  $("cartCount").textContent = `🛒 ${count} items`;
+  $("cartTotal").textContent = money(total);
+
+  $("cartItems").innerHTML = cart.length
+    ? cart.map(item => `
+      <div class="cart-row">
+        <span>${safeText(item.emoji)} ${safeText(item.name)}
+          × ${item.qty} = ${money(item.price * item.qty)}
+        </span>
+        <span>
+          <button data-minus="${item.id}">−</button>
+          <button data-plus="${item.id}">+</button>
+        </span>
+      </div>
+    `).join("")
+    : "Your cart is empty.";
+
+  document.querySelectorAll("[data-minus]").forEach(btn => {
+    btn.onclick = () => changeQty(Number(btn.dataset.minus), -1);
+  });
+
+  document.querySelectorAll("[data-plus]").forEach(btn => {
+    btn.onclick = () => changeQty(Number(btn.dataset.plus), 1);
+  });
+}
+
+function renderOrders() {
+  $("orderList").innerHTML = orders.length
+    ? [...orders].reverse().map(order => `
+      <div class="order-card">
+        <strong>Order #${safeText(order.id)}</strong>
+        <p>Customer: ${safeText(order.customer)}</p>
+        <p>Date: ${safeText(order.date)}</p>
+        <p>Status: ${safeText(order.status)}</p>
+        <p>${order.items.map(i =>
+          `${safeText(i.name)} × ${i.qty}`
+        ).join(", ")}</p>
+        <strong>Total: ${money(order.total)}</strong>
+      </div>
+    `).join("")
+    : "No orders yet.";
+}
+
+function renderAdmin() {
+  $("adminList").innerHTML = foods.length
+    ? foods.map(food => `
+      <div class="admin-row">
+        <span>${safeText(food.emoji)} ${safeText(food.name)}
+          - ${money(food.price)}
+        </span>
+        <span class="admin-actions">
+          <button class="edit" data-edit="${food.id}">Edit</button>
+          <button class="delete" data-delete="${food.id}">Delete</button>
+        </span>
+      </div>
+    `).join("")
+    : "No food items.";
+
+  document.querySelectorAll("[data-edit]").forEach(btn => {
+    btn.onclick = () => editFood(Number(btn.dataset.edit));
+  });
+
+  document.querySelectorAll("[data-delete]").forEach(btn => {
+    btn.onclick = () => deleteFood(Number(btn.dataset.delete));
+  });
+}
+
+function resetForm() {
+  editingId = null;
+  $("foodForm").reset();
+  $("saveFood").textContent = "Add Food";
+  $("cancelEdit").hidden = true;
+}
+
+function editFood(id) {
+  const food = foods.find(f => f.id === id);
+  if (!food) return;
+
+  editingId = id;
+  $("foodName").value = food.name;
+  $("foodPrice").value = food.price;
+  $("foodEmoji").value = food.emoji;
+
+  $("saveFood").textContent = "Update Food";
+  $("cancelEdit").hidden = false;
+}
+
+function deleteFood(id) {
+  if (!confirm("Are you sure you want to delete this food?")) return;
+
+  foods = foods.filter(f => f.id !== id);
+  cart = cart.filter(f => f.id !== id);
+
+  saveFoods();
+  renderMenu();
+  renderCart();
+}
+
+$("foodForm").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const name = $("foodName").value.trim();
+  const price = Number($("foodPrice").value);
+  const emoji = $("foodEmoji").value.trim() || "🍽️";
+
+  if (!name || !Number.isFinite(price) || price < 1) return;
+
+  if (editingId !== null) {
+    foods = foods.map(f => f.id === editingId
+      ? {...f, name, price, emoji}
+      : f
+    );
+
+    cart = cart.map(f => f.id === editingId
+      ? {...f, name, price, emoji}
+      : f
+    );
+  } else {
+    foods.push({
+      id: Date.now(),
+      name,
+      price,
+      emoji
+    });
+  }
+
+  saveFoods();
+  resetForm();
+  renderMenu();
+  renderCart();
+});
+
+$("cancelEdit").onclick = resetForm;
+
+$("placeOrder").onclick = () => {
+  if (!cart.length) {
+    alert("Please add food items to your cart first.");
+    return;
+  }
+
+  if (!customer) {
+    $("loginDialog").showModal();
+    alert("Please register before placing your order.");
+    return;
+  }
+
+  const order = {
+    id: String(Date.now()).slice(-6),
+    customer: customer.name,
+    total: cart.reduce((s, f) => s + f.price * f.qty, 0),
+    items: cart.map(f => ({...f})),
+    date: new Date().toLocaleString(),
+    status: "Order placed"
+  };
+
+  orders.push(order);
+  localStorage.setItem("fo-orders", JSON.stringify(orders));
+
+  cart = [];
+  renderCart();
+  renderOrders();
+
+  alert("Your order has been placed successfully!");
+};
+
+$("loginBtn").onclick = () => $("loginDialog").showModal();
+
+$("closeDialog").onclick = () => $("loginDialog").close();
+
+$("loginForm").addEventListener("submit", event => {
+  event.preventDefault();
+
+  customer = {
+    name: $("customerName").value.trim(),
+    email: $("customerEmail").value.trim()
+  };
+
+  localStorage.setItem("fo-customer", JSON.stringify(customer));
+
+  $("loginDialog").close();
+  $("loginBtn").textContent = "Hi, " + customer.name;
+});
+
+if (customer) {
+  $("loginBtn").textContent = "Hi, " + customer.name;
+}
+
+renderMenu();
+renderCart();
+renderOrders();
+</script>
+
+</body>
+</html>
